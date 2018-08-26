@@ -5,7 +5,6 @@ class Model:
     def Open(self):
         self.conn = sqlite3.connect('messenger.db')
         self.c = self.conn.cursor()
-        print("Open Ok")
     def Select_All(self, username: object) -> object:
         self.Open()
         self.c.execute('SELECT * FROM user WHERE username = ?', (username,))
@@ -33,7 +32,7 @@ class Model:
         self.Open()
         self.c.execute('SELECT * FROM user WHERE username = ?', (username,))
         row = self.c.fetchone()
-        if (row in self.c.execute('SELECT * FROM user WHERE username = ? and password = ?', (username,))):
+        if (row in self.c.execute('SELECT * FROM user WHERE username = ?', (username,))):
             return row[0]
         else:
             return 0
@@ -70,6 +69,10 @@ class Model:
         row = self.c.fetchone()
         if (row in self.c.execute('SELECT * FROM user WHERE username = ?', (friend_user,))):
             id_fr = row[0]
-            self.c.execute("INSERT INTO message VALUES (?,?,?)", (id_u, id_fr, mess))
-            print("OK")
+            self.c.execute("INSERT INTO message VALUES (?,?,?,?,?,?)", (id_u, id_fr, mess, 'a', 'a', 'a'))
             self.conn.commit()
+    def Add_fr(self, id_user, friend_user):
+        self.Open()
+        id_fr = self.Check_id(friend_user)
+        self.c.execute("INSERT INTO friend VALUES (?,?,?)", (id_user, id_fr, 'a'))
+        self.conn.commit()

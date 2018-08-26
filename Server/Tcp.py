@@ -91,8 +91,12 @@ class Tcp_Ip:
                 self.Server_con.list_ser_con.clear()
             """if(self.list_client[0] == '2' and len(self.list_client) == 2):
                 self.Server_mo.Show_Mess_Detail(self.check_id,self.list_client[1])"""
-            if(self.list_client[0] == 2 and len(self.list_client) == 3):
+            if(self.list_client[0] == '2' and len(self.list_client) == 3):
                 self.Server_mo.Send_Mess(self.check_id, self.list_client[1], self.list_client[2])
+                self.list_client.clear()
+            if(self.list_client[0] == '3' and len(self.list_client) == 2):
+                self.Server_mo.Add_fr(self.check_id , self.list_client[1])
+                self.list_client.clear()
 
 
 
